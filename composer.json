@@ -30,17 +30,20 @@
         "source": "https://github.com/usemuffin/orderly"
     },
     "require": {
-        "cakephp/orm": "^4.0"
+        "php": ">=8.1",
+        "cakephp/orm": "5.x-dev as 5.0.0"
     },
     "require-dev": {
-        "cakephp/cakephp": "^4.0",
-        "phpunit/phpunit": "~8.5.0"
+        "cakephp/cakephp": "5.x-dev as 5.0.0",
+        "phpunit/phpunit": "^9.6"
     },
     "autoload": {
         "psr-4": {
             "Muffin\\Orderly\\": "src"
         }
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload-dev": {
         "psr-4": {
             "Muffin\\Orderly\\Test\\": "tests",

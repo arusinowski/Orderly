@@ -6,7 +6,7 @@ namespace Muffin\Orderly\Model\Behavior;
 use ArrayObject;
 use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 
 class OrderlyBehavior extends Behavior
 {
@@ -20,19 +20,19 @@ class OrderlyBehavior extends Behavior
     {
         parent::initialize($config);
 
-        $this->_normalizeConfig($config);
+        $this->normalizeConfig($config);
     }
 
     /**
      * Add default order clause to query as necessary.
      *
      * @param \Cake\Event\EventInterface $event Event
-     * @param \Cake\ORM\Query $query Query
+     * @param \Cake\ORM\Query\SelectQuery $query Query
      * @param \ArrayObject $options Options
      * @param bool $primary Boolean indicating whether it's primary query.
      * @return void
      */
-    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, bool $primary)
+    public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary)
     {
         if ($query->clause('order')) {
             return;
@@ -44,7 +44,7 @@ class OrderlyBehavior extends Behavior
                 empty($config['callback'])
                 || call_user_func($config['callback'], $query, $options, $primary)
             ) {
-                $query->order($config['order']);
+                $query->orderBy($config['order']);
             }
         }
     }
@@ -55,7 +55,7 @@ class OrderlyBehavior extends Behavior
      * @param array $orders Orders config
      * @return void
      */
-    protected function _normalizeConfig(array $orders): void
+    protected function normalizeConfig(array $orders): void
     {
         if (empty($orders)) {
             $orders = [[]];
@@ -69,7 +69,7 @@ class OrderlyBehavior extends Behavior
         ];
 
         foreach ($orders as $key => $value) {
-            $orders[$key] = $orders[$key] + $default;
+            $orders[$key] = $value + $default;
         }
 
         $this->_config = [

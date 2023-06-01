@@ -10,7 +10,7 @@ use Cake\TestSuite\TestCase;
 
 class OrderlyBehaviorTest extends TestCase
 {
-    public $fixtures = [
+    public array $fixtures = [
         'core.Posts',
     ];
 
@@ -18,14 +18,14 @@ class OrderlyBehaviorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Table = TableRegistry::get('Posts');
+        $this->Table = TableRegistry::getTableLocator()->get('Posts');
     }
 
     public function tearDown(): void
     {
         parent::tearDown();
 
-        TableRegistry::clear();
+        TableRegistry::getTableLocator()->clear();
         unset($this->Table, $this->Behavior);
     }
 
